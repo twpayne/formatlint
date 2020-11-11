@@ -29,6 +29,9 @@ var extLinters = map[string][]Linter{
 	".toml": {
 		tomlLinter{},
 	},
+	".xml": {
+		xmlLinter{},
+	},
 	".yaml": {
 		yamlLinter{},
 	},
