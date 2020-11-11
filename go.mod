@@ -1,4 +1,4 @@
-module github.com/twpayne/formatlint
+module github.com/twpayne/parsecheck
 
 go 1.15
 

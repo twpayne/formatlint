@@ -5,13 +5,13 @@ import (
 	"go/token"
 )
 
-type goLinter struct{}
+type goParseChecker struct{}
 
-func (goLinter) Lint(data []byte) error {
+func (goParseChecker) Parse(data []byte) error {
 	_, err := parser.ParseFile(token.NewFileSet(), "", data, parser.AllErrors)
 	return err
 }
 
-func (goLinter) Name() string {
+func (goParseChecker) Name() string {
 	return "go"
 }

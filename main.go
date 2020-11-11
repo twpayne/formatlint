@@ -16,33 +16,33 @@ var ignoreDirs = map[string]bool{
 	"vendor": true,
 }
 
-var extLinters = map[string][]Linter{
+var extParseCheckers = map[string][]ParseChecker{
 	".go": {
-		goLinter{},
+		goParseChecker{},
 	},
 	".json": {
-		jsonLinter{},
+		jsonParseChecker{},
 	},
 	".sh": {
-		shLinter{},
+		shParseChecker{},
 	},
 	".toml": {
-		tomlLinter{},
+		tomlParseChecker{},
 	},
 	".xml": {
-		xmlLinter{},
+		xmlParseChecker{},
 	},
 	".yaml": {
-		yamlLinter{},
+		yamlParseChecker{},
 	},
 	".yml": {
-		yamlLinter{},
+		yamlParseChecker{},
 	},
 }
 
-func lintFile(filename string) error {
-	linters := extLinters[filepath.Ext(filename)]
-	if len(linters) == 0 {
+func parseCheckFile(filename string) error {
+	parseCheckers := extParseCheckers[filepath.Ext(filename)]
+	if len(parseCheckers) == 0 {
 		return nil
 	}
 
@@ -51,12 +51,12 @@ func lintFile(filename string) error {
 		return err
 	}
 
-	for _, linter := range linters {
-		linterPrefix := linter.Name() + ": "
-		if err := linter.Lint(data); err != nil {
+	for _, parseChecker := range parseCheckers {
+		parseCheckerPrefix := parseChecker.Name() + ": "
+		if err := parseChecker.Parse(data); err != nil {
 			s := err.Error()
-			if !strings.HasPrefix(s, linterPrefix) {
-				s = linterPrefix + s
+			if !strings.HasPrefix(s, parseCheckerPrefix) {
+				s = parseCheckerPrefix + s
 			}
 			return errors.New(s)
 		}
@@ -127,7 +127,7 @@ func run() error {
 
 	errors := 0
 	for _, path := range paths {
-		if err := lintFile(path); err != nil {
+		if err := parseCheckFile(path); err != nil {
 			errors++
 			fmt.Printf("%s: %v\n", path, err)
 		}

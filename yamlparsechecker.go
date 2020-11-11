@@ -2,13 +2,13 @@ package main
 
 import "gopkg.in/yaml.v3"
 
-type yamlLinter struct{}
+type yamlParseChecker struct{}
 
-func (yamlLinter) Lint(data []byte) error {
+func (yamlParseChecker) Parse(data []byte) error {
 	var value interface{}
 	return yaml.Unmarshal(data, &value)
 }
 
-func (yamlLinter) Name() string {
+func (yamlParseChecker) Name() string {
 	return "yaml"
 }

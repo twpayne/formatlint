@@ -2,13 +2,13 @@ package main
 
 import "github.com/pelletier/go-toml"
 
-type tomlLinter struct{}
+type tomlParseChecker struct{}
 
-func (tomlLinter) Lint(data []byte) error {
+func (tomlParseChecker) Parse(data []byte) error {
 	var value interface{}
 	return toml.Unmarshal(data, &value)
 }
 
-func (tomlLinter) Name() string {
+func (tomlParseChecker) Name() string {
 	return "toml"
 }
