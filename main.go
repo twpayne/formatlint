@@ -23,6 +23,9 @@ var extLinters = map[string][]Linter{
 	".json": {
 		jsonLinter{},
 	},
+	".sh": {
+		shLinter{},
+	},
 	".toml": {
 		tomlLinter{},
 	},
